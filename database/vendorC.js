@@ -9,15 +9,14 @@ const dbVendorC = new sqlite3.Database(DB_vendorC, (err) => {
     throw err;
   } else {
     console.log("Koneksi ke vendorC.db berhasil");
-  }
 
-  dbVendorC.run(`CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    category TEXT NOT NULL,
-    base_price INTEGER NOT NULL,
-    tax INTEGER NOT NULL,
-    stock INTEGER NOT NULL,
+    dbVendorC.run(`CREATE TABLE IF NOT EXISTS products (
+      id INTEGER PRIMARY KEY,
+      name TEXT NOT NULL,
+      category TEXT NOT NULL,
+      base_price INTEGER NOT NULL,
+      tax INTEGER NOT NULL,
+      stock INTEGER NOT NULL
     )`, (err) => {
       if (!err) {
         console.log("Table products created. Seeding initial data...");
@@ -27,6 +26,7 @@ const dbVendorC = new sqlite3.Database(DB_vendorC, (err) => {
         dbVendorC.run(insert, [503, "Nasi Pecel", "Food", 10000, 1000, 50]);
       }
     });
+  }
 });
 
 module.exports = { dbVendorC };
