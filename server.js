@@ -8,6 +8,20 @@ const port = process.env.PORT || 3003;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.json({
+        message: "API Vendor C is running. Access /vendorc/products for data."
+    });
+});
+
+app.get('/status', (req, res) => {
+    res.json({
+        status: 'OK',
+        message: 'Server is running',
+        timestamp: new Date()
+    });
+});
+
 const getAll = async (sql) => {
     const client = getPgClient();
     if (!client) {
@@ -17,14 +31,6 @@ const getAll = async (sql) => {
     const result = await client.query(sql);
     return result.rows; // pgClient mengembalikan data dalam properti 'rows'
 };
-
-app.get('/status', (req, res) => {
-    res.json({
-        status: 'OK',
-        message: 'Server is running',
-        timestamp: new Date()
-    });
-});
 
 app.get('/vendorc/products', async (req, res) => {
     try {
